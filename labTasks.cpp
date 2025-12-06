@@ -8,6 +8,11 @@ void displayevendigits(int number);
 bool iseven(int number);
  double futureInvestmentValue( double investmentAmount, double monthlyInterestRate, int years);
 void displayinvestmentrate(double investmentAmount, double monthlyInterestRate, int years);
+double millimeterstoinches(double millimeters);
+double inchestomillimeters(double inches);
+void  millimetertoinchetable(int millimeters);
+double Sumseries(int n);
+void tablesumseries(int n);
 int main(){
       //cout<<getaverageofdigits(2468);
       //isarmstrong(cubeOfDigits(153), 153);
@@ -16,7 +21,8 @@ int main(){
       //cout<<"enter inevstemnet rate"; cin>>investmentrate;
       //cout<<" enter investment amount ";cin>>amount;
       //displayinvestmentrate(amount, investmentrate, 30);
-      
+      // millimetertoinchetable(10);
+      tablesumseries(4);
 
   return 0;         
 }
@@ -75,5 +81,23 @@ void displayinvestmentrate(double investmentAmount, double monthlyInterestRate, 
   cout<<"Year    FutureInvestment";
   for(int i =1;i<years; i++ ){
     cout<<i<<" "<<futureInvestmentValue(investmentAmount, monthlyInterestRate, i)<<endl;
+  }
+}
+void  millimetertoinchetable(int millimeters){
+   cout<<"Millimeters  Inches ||   Inches Millimeters"<<endl;
+   for(int i =0; i<millimeters;i++){
+    cout<<i<<" "<<millimeterstoinches(i)<<"  "<<i<<"  "<<inchestomillimeters(i)<<endl;
+   }
+}
+double Sumseries(int n){
+   if(n>=0){
+    return Sumseries(n-1) + 1.0/(n* ( n +2.0 ));
+}else{
+  return 0;
+}}
+
+void tablesumseries(int n){
+  for(int i =1; i<n;i++){
+    cout<<i<<" "<<Sumseries(i);
   }
 }
