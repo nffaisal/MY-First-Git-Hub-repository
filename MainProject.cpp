@@ -13,7 +13,8 @@ using namespace std::chrono;
 int unlock_2 = 0;
 int unlock_3 = 0;
 void stop_function(int time);
-
+double calculate_elapsed_time(  const steady_clock::time_point& start,  const steady_clock::time_point& end);
+void leveling_System(int error_count);
 // Word bank for level 1 (easy)
 vector<string> words_easy = {
     "apple","ball","cat","dog","egg","fish","goat","hat","ice","jam","kite","lion","moon","nest","owl","pen","queen","rat","sun","tree","umbrella","van","wolf","xray","yarn","zebra","book","car","desk","ear","frog","game","hand","ink","jug","key","lamp","milk","net","orange","pig","quill","rope","ship","top","unit","vase","water","yard","zip","ant","bag","cup","door","eye","fan","gum","hill","iron","jar","kid","leaf","map","nose","oil","pan","quiz","ring","sock","tent","use","vote","wind","axe","young","zone","air","bed","coin","dust","elf","fire","gold","home","iceberg","joke","king","lake","man","nut","open","play","quiet","road","sand","time","up","voice","warm","year"
@@ -58,14 +59,53 @@ void levels(vector <string> word_bank, int total_number){
         }
     }
     auto stop = steady_clock::now(); // stopping the timer when all the input are taken from the user
-    auto time_elapsed = stop - start; // calculating time taken
+    int total_time = calculate_elapsed_time(start,stop) ; //calculating time taken
     cout << endl;
-    auto total_time = duration_cast<milliseconds>(time_elapsed).count() / 60000.0; //converting milliseconds to minutes
     double word_per_minute = (total_number / total_time); // calculating words per minute
     cout << fixed << setprecision(2); // setting result to 2 decimal places
     cout << "Your Typing speed is " << word_per_minute << " WPM" << endl; // words per min output
-    cout << "The amount of error in your typing are : " << error_count << endl; // accuracy errors output
+    cout << "The amount of error in your typing are : " << error_count << endl; // accuracy errors output 
     // Leveling system
+     leveling_System(error_count);
+}
+
+
+int main(){
+    // using srand for a randomized prompt on each attempt
+    srand(time(0));
+    // Intro to user with playbook
+    cout << "Codeflow aims to help its users become accurate and fast typists, but hold your horses becuase speed is nothing without consistency. To be the best typist you can be, it is essential to first focus on your accuracy and then increase your speed from there on. " << endl;
+    cout << endl;
+    cout << "Codeflow has 3 difficulty levels (Noob, Pro, Hacker)." << endl;
+    cout << "By achieving 4 Stars in accuracy in level 1 you can unlock level 2." << endl;
+    cout << "By achieving 5 Stars in accuracy in any level you can unlock levels 2 and 3." << endl;
+    cout << "Level 3 can only be unlocked by achieveing 5 stars in accuracy." << endl;
+    cout << "If your accuracy is reduced in later stages you can be DEPORTED back to level 1 or lock higher difficulty levels." << endl;
+    cout << "With that said goodluck!" << endl;
+    cout << "\t------Level 1------\t" << endl;
+    //applying a loop because we need to continue the program until the user doesnt close it else just simple fuction calls and devising levels depending on the word banks
+    while (true){
+        if (unlock_2 == 0){ // checking if level 2 is locked
+            levels(words_easy, 10);
+        }
+        else if (unlock_2 == 1 && unlock_3 == 0){ // checking if level 2 in unlocked and level 3 is locked
+            levels(words_medium, 20);
+        }
+        else if (unlock_3 == 1){ // checking if level 3 is unlocked
+            levels(words_hard, 30);
+        }
+    }
+    return 0;
+}
+void stop_function(int time){
+    this_thread::sleep_for(std::chrono::seconds(time)); // function to delay the count down by a second
+}
+double calculate_elapsed_time(  const steady_clock::time_point& start,  const steady_clock::time_point& end){
+    auto time_elapsed = end - start;
+    auto total_time = duration_cast<milliseconds>(time_elapsed).count() / 60000.0; 
+    return total_time;
+}
+void leveling_System(int error_count){
     if (error_count == 0) {
         cout << "Accuracy: *****" << endl;
         if (unlock_2 == 1) {
@@ -79,6 +119,7 @@ void levels(vector <string> word_bank, int total_number){
         else if (unlock_3 == 1) { // move to level 3 if level 2 cleared
             cout << "\t------Level 3------\t" << endl;
             levels(words_hard, 30);
+
             cout << endl;
         }
         unlock_2 = 1; // unlocking level 2
@@ -122,36 +163,4 @@ void levels(vector <string> word_bank, int total_number){
         levels(words_easy, 10); // return the user to level 1
         cout << endl;
     }
-}
-
-
-int main(){
-    // using srand for a randomized prompt on each attempt
-    srand(time(0));
-    // Intro to user with playbook
-    cout << "Codeflow aims to help its users become accurate and fast typists, but hold your horses becuase speed is nothing without consistency. To be the best typist you can be, it is essential to first focus on your accuracy and then increase your speed from there on. " << endl;
-    cout << endl;
-    cout << "Codeflow has 3 difficulty levels (Noob, Pro, Hacker)." << endl;
-    cout << "By achieving 4 Stars in accuracy in level 1 you can unlock level 2." << endl;
-    cout << "By achieving 5 Stars in accuracy in any level you can unlock levels 2 and 3." << endl;
-    cout << "Level 3 can only be unlocked by achieveing 5 stars in accuracy." << endl;
-    cout << "If your accuracy is reduced in later stages you can be DEPORTED back to level 1 or lock higher difficulty levels." << endl;
-    cout << "With that said goodluck!" << endl;
-    cout << "\t------Level 1------\t" << endl;
-    //applying a loop because we need to continue the program until the user doesnt close it else just simple fuction calls and devising levels depending on the word banks
-    while (true){
-        if (unlock_2 == 0){ // checking if level 2 is locked
-            levels(words_easy, 10);
-        }
-        else if (unlock_2 == 1 && unlock_3 == 0){ // checking if level 2 in unlocked and level 3 is locked
-            levels(words_medium, 20);
-        }
-        else if (unlock_3 == 1){ // checking if level 3 is unlocked
-            levels(words_hard, 30);
-        }
-    }
-    return 0;
-}
-void stop_function(int time){
-    this_thread::sleep_for(std::chrono::seconds(time)); // function to delay the count down by a second
 }

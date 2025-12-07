@@ -2,31 +2,42 @@
 #include <cstdlib>   // for rand() and srand()
 #include <ctime> 
 using namespace std;
-int dice(){
-    srand(0);
-    int num = rand() %6 +1;
-// snake ladder game
-}
-void PrintBoard(int roll){
-    int board [10[10]
-}
+void grades(int arr[], int number);
+int generateRandom();
 int main(){
-    int player1_x=9 ;
-    int player2_x =9;
-    
-    char player1, player2;
-    cout<<"chooe your character:";
-    cin>>player1;
-    cout<<"choose you character player 2";
-    cin>>player2;
-    
-       for(int i=0;i<10;i++){
-         for(int j=0;j<10;j++){
-               cout<<grid[i][j];
-               if(grid[9][0]){
-                 grid[9][0] = player1;
-               }
+  int arr[10];
+  const int number =10;
+   /* int amount;
+    for(int i=0;i<number;i++){
+       int repeats =0;
+     arr[i] = generateRandom(); 
+      for(int j=0;j<number;j++){
+         if(arr[i]==arr[j]){
+           repeats++;
          }
-       }
-    return 0;
+      }
+      cout<<arr[i]<<"  The repeats are: "<<repeats<<endl;
+    }*/
+    int arr1[100]; const int num2 =100;
+    long starttime = time(0);
+    for(int i=0;i<num2;i++){
+       arr[i] =generateRandom();
+       cout<<arr[i]<<" ";
+    }
+    long endtime =time(0);
+    long timeElapsed =(endtime - starttime) /60;
+    cout<<"\n The time elapsed is "<<timeElapsed;
+}
+void grades(int arr[], int number){
+  for(int i =0; i<number;i++){
+    if(arr[i]>90){ cout<<"The grade is A";}
+    else if(arr[i]>80) { cout<<"The grade is B";}
+    else if(arr[i]>70){ cout<<"The grade is C";}
+    else if(arr[i]>60){  cout<<" The grade is D";}
+    else if(arr[i]<60){  cout<<"The grade is Fail";} }
+}
+int generateRandom(){
+   int num;
+   num =(rand() %100) +1 ;
+  return num;
 }
