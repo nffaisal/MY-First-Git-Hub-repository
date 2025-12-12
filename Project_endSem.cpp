@@ -17,7 +17,7 @@ double words_per_minute(auto start_time,auto stop_time, int total_words);
 void levels(vector <string> word_bank, int total_words);
 void leveling_System(int error_count);
 void levels_with_word_amount(int word_amount);
-
+int choice;
 //Global Variables
 int unlock_2 = 0;//level 2 not unlocked
 int unlock_3 =0;//level 3 not unlocked
@@ -53,7 +53,7 @@ vector<string> words_hard = {
     "aberration","abstruse","acquiesce","adjudicate","alacrity","amorphous","anachronistic","antithesis","apocryphal","arboreal","belligerent","cacophony","circumlocution","clandestine","cognizant","conflagration","conundrum","corporeal","credulous","deleterious","demagogue","denigrate","diaphanous","disparate","ebullient","eclectic","egregious","enervate","ephemeral","equanimity","esoteric","evanescent","exacerbate","fastidious","fortuitous","garrulous","grandiloquent","gregarious","hackneyed","iconoclast","idiosyncratic","impecunious","imperious","incontrovertible","indefatigable","ineffable","inexorable","ingratiate","insidious","inveterate","juxtaposition","lachrymose","laconic","lexicon","lugubrious","magnanimous","malevolent","mendacious","meticulous","moribund","nefarious","nonplussed","obfuscate","obsequious","omnipotent","opprobrium","parsimony","pejorative","perfunctory","peripatetic","perspicacious","phlegmatic","precarious","precipitous","predilection","premonition","prevaricate","proclivity","propensity","protuberant","quintessential","recalcitrant","recondite","recrimination","redolent","sagacious","salient","sanguine","solicitous","tenuous","trenchant","ubiquitous","unfathomable","vicissitude","vindicate","vitriolic","vociferous","zeitgeist","zephyr","zealotry"
 };
 // using vectors instead of arrays as vectors allow the index to be a variable
-void levels(vector <string> word_bank, int total_words){
+void levels(vector <string> word_bank, int total_words, int choice =1){
     int error_count = 0; // initializing error count to 0
     vector<string> selected_words; // vector for our randomized words prompt
     for (int i = 0; i < total_words; i++){
@@ -90,7 +90,9 @@ void levels(vector <string> word_bank, int total_words){
     cout << "\nYour Typing speed is " <<  COLOR_GREEN  <<words_per_minute(start, stop, total_words) <<" WPM\n" <<COLOR_RESET; // words per min output
     cout << "\nThe amount of error in your typing are : " << COLOR_RED << error_count << COLOR_RESET << endl; // accuracy errors output
     stop_function(5);
+    if(choice ==1){
     leveling_System(error_count); //Call levelling function to decide if player should proceed next level
+    }
 }
 void leveling_System(int error_count){
   if(error_count >=9){
@@ -142,15 +144,15 @@ void leveling_System(int error_count){
    while (!game_won){
         if (unlock_3 == 1) { 
             cout << "\n\tLevel 3\t" << endl;
-            levels(words_hard, word_amount * 3);   //three times word_amount and from difficult level
+            levels(words_hard, word_amount * 3,1);   //three times word_amount and from difficult level
         } else if (unlock_2 == 1) { 
             cout << "\n\tLevel 2\t" << endl;
-            levels(words_medium, word_amount * 2 );//two times word_amount and from medium level
+            levels(words_medium, word_amount * 2, 1);//two times word_amount and from medium level
             
         } else {
             // Default: Play Level 1.
             cout << "\n\tLevel 1\t" << endl;
-            levels(words_easy, word_amount * 1);//word_amount and from easy word bank
+            levels(words_easy, word_amount * 1,1);//word_amount and from easy word bank
         }
     }
 }
@@ -158,7 +160,7 @@ int main(){
     // using srand for a randomized prompt on each attempt
     srand(time(0));
     int option;
-    int choice;
+    int end_program =0 ;
     int word_amount;
     // Intro to user with playbook
     cout<<"---------------------------------------------------------------------------------------------------------------------";
@@ -210,7 +212,21 @@ int main(){
       levels_with_word_amount(10);break;
     } break;
    case 2:
-   cout<<"For speed you have to enter words from each level in a specific amount of time or you will face demotion\n level 1 has to be done in ";
+   cout<<"For speed you can choose any level and keep trying until your wpm is very fast\n.  press: 1. easy 2. hard 3.difficult 4. end program";
+   int choose;
+    while(end_program != 1){
+      cin>> choose;
+         switch(choose){
+          case 1:
+          levels(words_easy,10,2); break;
+          case 2:
+          levels(words_medium,10, 2); break;
+          case 3:
+          levels(words_hard,10, 2);break;
+          case 4:
+          end_program =1;
+         }
+    }
     }
 
     stop_function(10);//give time for user to read playbook
