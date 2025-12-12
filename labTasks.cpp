@@ -39,6 +39,7 @@ int main(){
         // printMatrix(4);
         //cout<<ispalindrome(121);
         //craps();
+        cout<<"\u2713";
   return 0;         
 }
 double getaverageofdigits(int number){
