@@ -175,8 +175,9 @@ int main(){
     cout<<  "6. After improving accuracy you can continue on to improve speed!" << endl;;
     cout << "7. With that said goodluck!" << endl;
     cout<<"----------------------------------------------------------------------------------------------------------------------";
-    cout<<"Speed or 1. accuracy";
-    do{
+    cout<<"\nPick: \n1. Accuracy\n  2. Speed\n--> \t";
+     // Check if option is among 1 or 2
+     do{
       cin>>choice;
       if(choice>2 || choice <1){
         cout<<"REENETER:";
@@ -184,54 +185,60 @@ int main(){
         break;
       }}while(true);
     switch(choice){
-      case 1:
-      cout<<"\nPick Option:\n 1. Default Word Amount (10,20,30):  \n 2. Customized Word Amount (limit: 1 - 15): \n"; //Letting player choose amount of words.
-        do{
+      case 1:// for accuracy  checking. presents two options from accuracy, default word count or customized
+         cout<<"\nPick Option:\n 1. Default Word Amount (10,20,30):  \n 2. Customized Word Amount (limit: 1 - 15): \n-->\t"; //Letting player choose amount of words.
+         do{
              cin>>option;
-                  if(option >2 || option<1){
-             cout<< "Enter Valid option 1 or 2\n";  //if  incorrect option picked
-         }else{
-             break;
-        }
-     }while(true);
-    switch(option){
-      case 1:
-        levels_with_word_amount(10); break;
-      case 2:
-        cout<<"Enter word Amount:\n";
-        do{
-          cin>>word_amount; //Enter amount between 0 - 15 to set word amount
-          if(word_amount >15 || word_amount <0){
-             cout<< "Enter Valid Amount\n"; 
-         }else{
-             break;
-        }
+               if(option >2 || option<1){
+                    cout<< "Enter Valid option 1 or 2\n -->\t";  //if  incorrect option picked
+               }else{
+                   break;
+               }
         }while(true);
-        levels_with_word_amount(word_amount); break ; //call levels to be made with specific word count from player.
-    default:
-      levels_with_word_amount(10);break;
-    } break;
+        switch(option){
+           case 1:
+              levels_with_word_amount(10); break;
+           case 2:
+              cout<<"Enter word Amount:\n";
+              do{
+                cin>>word_amount; //Enter amount between 0 - 15 to set word amount
+                if(word_amount >15 || word_amount <0){
+                   cout<< "Enter Valid Amount\n"; 
+                }else{
+                   break;
+               }
+             }while(true);
+             levels_with_word_amount(word_amount); 
+             break ; //call levels to be made with specific word count from player.
+          default:
+             levels_with_word_amount(10);break;
+            }
+       cout << "    \tCONGRATULATIONS: YOU WIN!\n     " ;
+       cout << "\tYou achieved 5-star accuracy on the HARDEST level!\n";
+       break;
    case 2:
-   cout<<"For speed you can choose any level and keep trying until your wpm is very fast\n.  press: 1. easy 2. hard 3.difficult 4. end program";
-   int choose;
-    while(end_program != 1){
+    cout<<"For speed you can choose any level and keep trying until wpm increases!\n.  press: 1. easy \n2. hard \n3.difficult \n4. end program\n -->\t";
+     int choose;
+     while(end_program != 1){
+      cout<<"\n Enter an option: \t";
       cin>> choose;
-         switch(choose){
-          case 1:
+      switch(choose){
+        case 1:
           levels(words_easy,10,2); break;
-          case 2:
+        case 2:
           levels(words_medium,10, 2); break;
-          case 3:
+        case 3:
           levels(words_hard,10, 2);break;
-          case 4:
-          end_program =1;
+        case 4:
+        default:
+            end_program =1; break;
          }
-    }
-    }
+      }
+   }
 
-    stop_function(10);//give time for user to read playbook
+    
     //applying a loop because we need to continue the program until the user doesnt close it else just simple fuction calls and devising levels depending on the word banks
-    cout << "    \tCONGRATULATIONS: YOU WIN!\n     " ;
-    cout << "\tYou achieved 5-star accuracy on the HARDEST level!\n";
+    cout << "  \nEnd of game!\n    ";
+
     return 0;
 }
